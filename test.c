@@ -11,7 +11,7 @@
 #include "myfun.h"
 
 int main(){
-	
+	int diditwork = -1;	
 // open serial device
 	printf("Congratulations, it has compiled and run.\n");
 	system("lsusb");
@@ -20,8 +20,7 @@ int main(){
 
 	printf("Bus: %s; Dev: %s\n",busno,devno);
 
-//	const char *device = "/dev/bus/usb/001/003";
-//	const char *device = "/dev/sdb";
+// TODO figure out how to determine device path
 	const char *device = "/dev/sdb1";
 	printf("Path: %s\n",device);
 	system("sudo su");
@@ -30,7 +29,6 @@ int main(){
 	if (fd==-1){
 		printf("fail: %s\n",strerror(errno));
 	}
-	close(fd);
 
 // configure all termios parameters/properties
 
@@ -38,6 +36,12 @@ int main(){
 
 // close serial device
 
+	diditwork = close(fd);
+	if (diditwork<0){
+		printf("failed to close: %s\n",strerror(errno));
+	}
+
+// return value
 	return 0;
 }
 
